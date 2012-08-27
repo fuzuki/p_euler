@@ -9,22 +9,15 @@
 (define (isParin n)
   (equal? (num2list n) (reverse (num2list n))))
 
-(define (max-num l)
-  (define (sub l m)
-    (cond ((null? l) m)
-          ((> (car l) m)(sub (cdr l)(car l)))
-          (else (sub (cdr l) m))))
-  (sub (cdr l)(car l)))
-
-
 (define (pe4 digit)
   (let ((orig (- (expt 10 digit) 1)))
-    (define (sub m n l)
-      (cond ((> (- orig (/ orig 10)) n) l)
-            ((isParin (* n m)) (sub (- m 1) n (cons (* n m) l)))
-            ((> m n)(sub (- m 1) n l))
-            (else (sub orig (- n 1) l))))
-    (max-num (sub orig orig '()))))
+    (define (sub m n max)
+      (cond ((> max (* orig n)) max)
+            ((isParin (* n m))(cond ((> max (* n m)) (sub (- m 1) n max))
+                                    (else (sub (- m 1) n (* n m)))))
+            ((> m n)(sub (- m 1) n max))
+            (else (sub orig (- n 1) max))))
+    (sub orig orig 0)))
 
 (pe4 3)
 
