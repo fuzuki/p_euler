@@ -1,5 +1,5 @@
 #lang scheme
-;too complicated
+;too complicated and slow
 ;rewrite later
 
 (define (factorize n)
